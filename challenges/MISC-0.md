@@ -15,7 +15,4 @@ A basic reconnaissance task to identify the location and content of the flag wit
    ```bash
    grep -r -e "flag" .
    ```
-**Screenshot:**\
-<center>
-![img](https://github.com/webbie003/Nether-Web-CTF-Write-up/blob/main/images/MISC-0.jpg)
-</center>
+   ![screenshot](../images/MISC-0.jpg)

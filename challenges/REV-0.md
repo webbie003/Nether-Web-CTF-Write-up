@@ -11,9 +11,7 @@ A light reverse engineering task involving decoding an array of integers to reco
 1. Locate and review the two files under `/ctf` called `main.py` & `flag_data.json`.
 2. The encoded flag is found under `flag_data.json` in the form of an integer array.\
 
-<center>
-![img](https://github.com/webbie003/Nether-Web-CTF-Write-up/blob/main/images/REV-0.jpg)
-</center>
+    ![screenshot](../images/REV-0.jpg)
 
 3. Decoded the flag using a python script I wrote:
    ```python
