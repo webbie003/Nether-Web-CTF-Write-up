@@ -1,8 +1,7 @@
 ## MISC-0: Information Gathering
 **Description:**
 A basic reconnaissance task to identify the location and content of the flag within the file system.
-
-<details> <summary><b>Reveal Flag</b></summary> flag{2cf24dba5f} </details>
+<details> <summary><b>Reveal Hidden Flag</b></summary> flag{2cf24dba5f} </details></br>
 
 **Solution Summary:**
 - Navigated to the `/ctf` directory.
@@ -17,5 +16,6 @@ A basic reconnaissance task to identify the location and content of the flag wit
    grep -r -e "flag" .
    ```
 **Screenshot:**\
+<center>
 ![img](https://github.com/webbie003/Nether-Web-CTF-Write-up/blob/main/images/MISC-0.jpg)
-
+</center>
