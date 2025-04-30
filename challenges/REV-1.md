@@ -1,42 +1,44 @@
-## MISC-1: Trace Investigation
+## REV-1: Flag Authentication
 **Description:**
-This challenge involved analyzing a user’s shell history to reverse-engineer how a flag was programmatically generated from a seeded value.
-<details> <summary><b>Reveal Hidden Flag</b></summary> flag{b57ab06d11} </details></br>
+This challenge involved decrypting a file using a known encryption algorithm along with the provided key and IV values.
+<details> <summary><b>Reveal Hidden Flag</b></summary> flag{735701f285} </details></br>
 
 **Solution Summary:**
-- Identified a reference to a script and its execution within `.ash_history`.
-- Located the parameter used to generate the flag.
-- Reconstructed the hash-based generation logic to reveal the flag.
+- Discovered the encryption algorithm used was AES-128-CBC.
+- Both the key and IV were recoverable from the system or accompanying files.
+- Used OpenSSL to manually decrypt the encrypted file.
 
 **Exploitation Steps:**
-1. Viewed the `.ash_history` file to find a reference to script execution:
-   ```bash
-   cat ~/.ash_history
-   ```
-   Found entry:
-   ```plaintext
-   chmod +x /mnt/shared/src/gen_task.sh && /mnt/shared/src/gen_task.sh hellowhoareyou && echo -n Comp && echo leted
-   ```
-   ![img](../images/MISC-1.jpg)
+1. Enumerating the terminal I found the following challenge files under `/ctf` and something of interest within the `~/.ash_history`:
+   ![img](../images/REV-1.jpg)
+
+2. Investigating further I found the `/mnt/shared/` directory contained the following:
+   ![img](../images/REV-1a.jpg)
+
+3. Looking at the `iv.bin` and `key.bin` files we can get the plain text strings:
+   - Key: `1234567890abcdef`
+   - IV: `0123456789abcdef`\
+
+   _These appear to be directly used as encryption parameters for the AES operation._
+
+4. The `encrypt.sh` script within the same directory shows exactly how the flag was encrypted from a file called flag.txt which was removed.
    
-2. Identified hellowhoareyou as the argument passed into the script.
+   ![img](../images/REV-1c.jpg)
 
-3. Analyzing the script logic for the `app.py` and `config.py` scripts I found the following flag generation method:
+   The script snippet below uses the `openssl enc` utility to apply AES-128-CBC encryption with the key and IV:
    ```bash
-   flag=$(echo -n "$seed" | sha256sum | awk '{print substr($1, 1, 10)}')
-   ```
+   openssl enc -aes-128-cbc -in flag.txt -out flag.enc \
+      -K $(xxd -p key.bin) \
+      -iv $(xxd -p iv.bin)
+   ```   
+   _This gave us a reliable blueprint to reverse the encryption process._
 
-4. Replaced `$seed` with `hellowhoareyou` found in step two from `~/.ash_history`:
+5. Using the recovered key and IV, we can manually decrypt the `flag.enc` file.
+
    ```bash
-   echo -n "hellowhoareyou" | sha256sum | awk '{print substr($1, 1, 10)}'
+   openssl enc -d -aes-128-cbc -K 30313233343536373839616263646566 -iv 31323334353637383930616263646566 -in flag.enc
    ```
-   Output:
-   ```plaintext
-   b57**REDACTED** 
-   ```
-   ![img](../images/MISC-1a.jpg)
+   **Note:** The key and IV must be converted from ASCII (plaintext) to hexadecimal before being passed to OpenSSL.
 
-5. Complete flag by adding the wrapper and submitting:
-   ```plaintext
-   flag{b57**REDACTED**}
-   ```
+6. The command will successfully decrypted the file and revealed the plaintext flag.
+   ![img](../images/REV-1b.jpg)
