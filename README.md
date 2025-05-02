@@ -23,26 +23,15 @@ Nether Web presents a series of missions spanning reconnaissance, analysis, cryp
 - [WEB-1: Command Injection](challenges/WEB-1.md)
 
 ## Tools Used
-<table width="100%">
-  <tr>
-    <td>
-      <ul>
-        <li>GDB</li>
-        <li>GCC</li>
-        <li>Objdump</li>
-        <li>Python3</li>
-      </ul>
-    </td>
-    <td>
-      <ul>
-        <li>OpenSSL</li>
-        <li>Netcat</li>
-        <li>wget</li>
-        <li>Core Linux utilities (e.g., `cat`, `ls`, `grep`)</li>
-      </ul>
-    </td>
-  </tr>
-</table>
+- GDB
+- GCC
+- Objdump
+- Python3
+- OpenSSL
+- Netcat
+- wget
+- Core Linux utilities (e.g., cat, ls, grep, nano etc.)
+
 
 ## Reflection
 Completing the Nether Web CTF provided a practical, hands-on opportunity to apply a range of web exploitation techniques in a safe and structured environment. It reinforced concepts I had studied for CEH while exposing me to real-world attack vectors involving insecure input handling, poor session control, and unsafe cryptographic implementations.
