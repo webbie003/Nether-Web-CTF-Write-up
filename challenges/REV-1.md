@@ -1,44 +1,48 @@
 ## REV-1: Flag Authentication
-**Description:**
+**Description:**  
 This challenge involved decrypting a file using a known encryption algorithm along with the provided key and IV values.
-<details> <summary><b>Reveal Hidden Flag</b></summary> flag{735701f285} </details></br>
+<details><summary><b>Reveal Hidden Flag</b></summary>
+flag{735701f285}
+</details></br>
 
 **Solution Summary:**
-- Discovered the encryption algorithm used was AES-128-CBC.
-- Both the key and IV were recoverable from the system or accompanying files.
-- Used OpenSSL to manually decrypt the encrypted file.
+- Discovered that the encryption algorithm used was AES-128-CBC.
+- Retrieved the key and IV from the system in plaintext form.
+- Used OpenSSL to manually decrypt the encrypted flag file.
 
 **Exploitation Steps:**
-1. Enumerating the terminal I found the following challenge files under `/ctf` and something of interest within the `~/.ash_history`:
+1. Enumerated the terminal and found challenge files under `/ctf`, as well as something noteworthy in `.ash_history`:
    ![img](../images/REV-1.jpg)
 
-2. Investigating further I found the `/mnt/shared/` directory contained the following:
+2. Investigated further and found the `/mnt/shared/` directory contained the encryption-related files:
    ![img](../images/REV-1a.jpg)
 
-3. Looking at the `iv.bin` and `key.bin` files we can get the plain text strings:
+3. Extracted plaintext values from `iv.bin` and `key.bin`:
    - Key: `1234567890abcdef`
-   - IV: `0123456789abcdef`\
+   - IV: `0123456789abcdef`
 
-   _These appear to be directly used as encryption parameters for the AES operation._
+   _These appear to have been directly used as encryption parameters for AES._
 
-4. The `encrypt.sh` script within the same directory shows exactly how the flag was encrypted from a file called flag.txt which was removed.
-   
+4. Examined the `encrypt.sh` script in the same directory, which showed how `flag.txt` (now removed) was encrypted into `flag.enc`:
+
    ![img](../images/REV-1c.jpg)
 
-   The script snippet below uses the `openssl enc` utility to apply AES-128-CBC encryption with the key and IV:
+   The script used `openssl enc` with `xxd` to convert the binary key and IV to hex:
    ```bash
    openssl enc -aes-128-cbc -in flag.txt -out flag.enc \
-      -K $(xxd -p key.bin) \
-      -iv $(xxd -p iv.bin)
-   ```   
-   _This gave us a reliable blueprint to reverse the encryption process._
-
-5. Using the recovered key and IV, we can manually decrypt the `flag.enc` file.
-
-   ```bash
-   openssl enc -d -aes-128-cbc -K 30313233343536373839616263646566 -iv 31323334353637383930616263646566 -in flag.enc
+     -K $(xxd -p key.bin) \
+     -iv $(xxd -p iv.bin)
    ```
-   **Note:** The key and IV must be converted from ASCII (plaintext) to hexadecimal before being passed to OpenSSL.
+   _This provided a clear blueprint to reverse the encryption process._
 
-6. The command will successfully decrypted the file and revealed the plaintext flag.
+5. Used the recovered key and IV to manually decrypt flag.enc using OpenSSL:
+   ```bash
+   openssl enc -d -aes-128-cbc \
+   -K 30313233343536373839616263646566 \
+   -iv 31323334353637383930616263646566 \
+   -in flag.enc
+   ```
+   **Note:** The key and IV must be converted from ASCII to hexadecimal before being passed to OpenSSL.
+
+6. The command successfully decrypted the file and revealed the plaintext flag:
    ![img](../images/REV-1b.jpg)

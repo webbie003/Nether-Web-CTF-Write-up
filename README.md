@@ -1,16 +1,16 @@
 # Nether Web - Browser-Based CTF Write-Up
 
 ## Overview
-While preparing for the CEH (Certified Ethical Hacker) exam, I discovered the Nether Web CTF hosted at parath.net, which was mentioned on Reddit’s r/securityCTF community. This browser-based CTF consists of eight progressive web challenges, referred to as "Missions," designed to test a variety of web security concepts such as input validation, authentication bypass, insecure client-side controls, and session management vulnerabilities. I challenged myself to complete all eight tasks, applying techniques learned while studying for CEH and using the opportunity to reinforce my practical skills through hands-on experience.
+While preparing for the CEH (Certified Ethical Hacker) exam, I came across the **Nether Web CTF** ([parath.net](https://parath.net/)) which was mentioned in the **r/securityCTF** community on Reddit. This browser-based CTF features eight progressive challenges—referred to as Missions—that test a range of web security concepts, including input validation, authentication bypass, insecure client-side controls, and session management flaws. I set out to complete all eight tasks, applying techniques learned during my CEH studies and using the experience to reinforce my practical skills through hands-on application.
 
 **Difficulty:** Easy – Medium
 
 ## Challenge Description
-Challenge Series: Nether Web
-Format: Browser-based, progressive web application vulnerabilities
-Objective: Exploit various weaknesses in the target web application to progress through each challenge and ultimately capture all flags.
+Nether Web presents a series of missions spanning reconnaissance, analysis, cryptography, web exploitation, and system-level attacks. Each challenge is designed to emulate real-world vulnerabilities, encouraging participants to apply practical cybersecurity skills in a hands-on, progressive format.
 
-Nether Web challenges participants with missions across reconnaissance, analysis, cryptography, web vulnerabilities, and exploitation — each crafted to simulate real-world attack scenarios and test practical cybersecurity skills.
+**Challenge Series:** Nether Web  
+**Format:** Browser-based, progressive web application vulnerabilities  
+**Objective:** Exploit various weaknesses in a simulated web application to progress through each mission and ultimately capture all flags.
 
 ## Challenge Index
 - [MISC-0: Information Gathering](challenges/MISC-0.md)
@@ -21,3 +21,31 @@ Nether Web challenges participants with missions across reconnaissance, analysis
 - [MISC-1: Trace Investigation](challenges/MISC-1.md)
 - [REV-1: Flag Authentication](challenges/REV-1.md)
 - [WEB-1: Command Injection](challenges/WEB-1.md)
+
+## Tools Used
+<table width="100%">
+  <tr>
+    <td>
+      <ul>
+        <li>GDB</li>
+        <li>GCC</li>
+        <li>Objdump</li>
+        <li>Python3</li>
+      </ul>
+    </td>
+    <td>
+      <ul>
+        <li>OpenSSL</li>
+        <li>Netcat</li>
+        <li>wget</li>
+        <li>Core Linux utilities (e.g., `cat`, `ls`, `grep`)</li>
+      </ul>
+    </td>
+  </tr>
+</table>
+
+## Reflection
+Completing the Nether Web CTF provided a practical, hands-on opportunity to apply a range of web exploitation techniques in a safe and structured environment. It reinforced concepts I had studied for CEH while exposing me to real-world attack vectors involving insecure input handling, poor session control, and unsafe cryptographic implementations.
+
+## Acknowledgments
+Special thanks to [u/PrimaryAdventurous97](https://www.reddit.com/user/PrimaryAdventurous97/) for publishing the Nether Web CTF and sharing it with the community on [r/securityCTF](https://www.reddit.com/r/securityCTF/).

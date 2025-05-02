@@ -1,7 +1,9 @@
 ## CRY-0: Cryptanalysis
-**Description:**
+**Description:**  
 A basic cryptanalysis challenge that involves decrypting an AES-encrypted file using information leaked in historical terminal commands.
-<details> <summary><b>Reveal Hidden Flag</b></summary> flag{eda7be446f} </details></br>
+<details> <summary><b>Reveal Hidden Flag</b></summary>
+flag{eda7be446f}
+</details></br>
 
 **Solution Summary:**
 - Discovered an encrypted file `flag.enc` in the `/ctf` directory.
@@ -14,17 +16,17 @@ A basic cryptanalysis challenge that involves decrypting an AES-encrypted file u
    cd /ctf && ls
    ```
 
-2. View historical terminal commands to find encryption parameters and password:
+2. Inspect historical terminal commands to locate the encryption syntax and password:
     ```bash
     cat ~/.ash_history
     ```
-    Found the pass that used to create the `flag.enc` file:
+    Found the command that created the `flag.enc` file:
     ```plaintext
     openssl enc -aes-256-cbc -salt -pbkdf2 -pass pass:W4chgybF8upzeHTsfFrkr9fDmoqhiuTJ -in flag.txt -out /ctf/flag.enc
     ```
     ![screenshot](../images/CRY-0.jpg)
 
-3. Decrypt the flag using OpenSSL and the pass from above when prompted:
+3. Decrypt the flag using OpenSSL (you will be prompted for the password):
     ```bash
     openssl enc -d -aes-256-cbc -in ./flag.enc -out flag.txt -pbkdf2
     ```
